@@ -1,7 +1,7 @@
-export * from './useTenTap';
 export { default as BridgeExtension } from '../bridges/base';
 export { BlockquoteBridge } from '../bridges/blockquote';
 export { BoldBridge } from '../bridges/bold';
+export { HardBreakBridge } from '../bridges/br';
 export { BulletListBridge } from '../bridges/bulletList';
 export { CodeBridge } from '../bridges/code';
 export { ColorBridge } from '../bridges/color';
@@ -19,9 +19,10 @@ export { PlaceholderBridge } from '../bridges/placeholder';
 export { TenTapStartKit } from '../bridges/StarterKit';
 export { StrikeBridge } from '../bridges/strike';
 export { TaskListBridge } from '../bridges/tasklist';
+export { TextAlignBridge } from '../bridges/textAlign';
 export { UnderlineBridge } from '../bridges/underline';
-export { HardBreakBridge } from '../bridges/br';
+export * from './useTenTap';
 
 // We are exposing tiptap view + state here to avoid this error https://github.com/ueberdosis/tiptap/issues/3869#issuecomment-2167931620
-export * from '@tiptap/pm/view';
 export * from '@tiptap/pm/state';
+export * from '@tiptap/pm/view';

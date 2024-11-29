@@ -35,6 +35,7 @@ __metadata:
     "@tiptap/extension-strike": ^2.2.1
     "@tiptap/extension-task-item": ^2.1.16
     "@tiptap/extension-task-list": ^2.1.16
+    "@tiptap/extension-text-align": ^2.10.3
     "@tiptap/extension-text-style": ^2.1.16
     "@tiptap/extension-underline": ^2.1.16
     "@tiptap/pm": ^2.1.16
@@ -5571,6 +5572,15 @@ __metadata:
   peerDependencies:
     "@tiptap/core": ^2.0.0
   checksum: 43470dacb7bb3a9ae47a22ee82ec898ec9e73f7fbd08e8cb6c7a26edc57722626b37f11eca75efaac4fb1845e6f0e735bbd08f796963b760538c99490751017e
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-text-align@npm:^2.10.3":
+  version: 2.10.3
+  resolution: "@tiptap/extension-text-align@npm:2.10.3"
+  peerDependencies:
+    "@tiptap/core": ^2.7.0
+  checksum: 61f3e21fd7d3e861a950365494430d91e045d023288d81473387cfa052ab7a1d09b9549560c28c1a2ea17b80c51a108328242eeee13d369a5698833d56dba424
   languageName: node
   linkType: hard
 
