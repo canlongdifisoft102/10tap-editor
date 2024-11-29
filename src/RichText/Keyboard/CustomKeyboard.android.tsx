@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { TenTapView, useKeyboard } from '@10play/tentap-editor';
-import type { CustomKeyboardExtension } from './CustomKeyboardExtension';
+import { TenTapView, useKeyboard } from '../..';
 import { isFabric } from '../../utils/misc';
+import type { CustomKeyboardExtension } from './CustomKeyboardExtension';
 
 export interface CustomKeyboardAndroidProps {
   rootRef: React.RefObject<any>;

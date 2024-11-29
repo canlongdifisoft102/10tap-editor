@@ -1,6 +1,7 @@
 import React from 'react';
 import { processColor, type ColorValue } from 'react-native';
-import { TenTapView, useKeyboard } from '@10play/tentap-editor';
+
+import { TenTapView, useKeyboard } from '../..';
 import { useRefHandle } from '../../utils/useRefHandle';
 import type { CustomKeyboardExtension } from './CustomKeyboardExtension';
 export interface CustomKeyboardIOSProps {

@@ -1,5 +1,5 @@
 {
-  "name": "@10play/tentap-editor",
+  "name": "@canlongdifisoft102/tentap-editor",
   "version": "0.5.24",
   "description": "React Native Rich Text Editor",
   "main": "lib/commonjs/index",
@@ -64,14 +64,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/10play/10Tap-Editor.git"
+    "url": "git+https://github.com/canlongdifisoft102/10Tap-Editor.git"
   },
   "author": "canlong.nguyen@difisoft.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/10play/10Tap-Editor/issues"
+    "url": "https://github.com/canlongdifisoft102/10Tap-Editor/issues"
   },
-  "homepage": "https://github.com/10play/10Tap-Editor#readme",
+  "homepage": "https://github.com/canlongdifisoft102/10Tap-Editor#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
