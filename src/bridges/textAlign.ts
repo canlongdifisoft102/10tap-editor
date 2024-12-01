@@ -10,10 +10,8 @@ type TextAlignEditorState = {
 };
 
 type TextAlignEditorInstance = {
-  toggleTextAlignLeft: () => void;
-  toggleTextAlignRight: () => void;
-  toggleTextAlignCenter: () => void;
-  toggleTextAlignJustify: () => void;
+  setTextAlign: (payload: 'left' | 'right' | 'center' | 'justify') => void;
+  unSetTextAlign: () => void;
 };
 
 declare module '../types/EditorBridge' {
@@ -22,15 +20,13 @@ declare module '../types/EditorBridge' {
 }
 
 export enum TextAlignEditorActionType {
-  ToggleTextAlignLeft = 'toggle-TextAlignLeft',
-  ToggleTextAlignRight = 'toggle-TextAlignRight',
-  ToggleTextAlignCenter = 'toggle-TextAlignCenter',
-  ToggleTextAlignJustify = 'toggle-TextAlignJustify',
+  SetTextAlign = 'toggle-TextAlign',
+  UnSetTextAlign = 'toggle-UnSetTextAlign',
 }
 
 type TextAlignMessage = {
   type: TextAlignEditorActionType;
-  payload?: undefined;
+  payload?: 'left' | 'right' | 'center' | 'justify';
 };
 
 export const TextAlignBridge = new BridgeExtension<
@@ -38,49 +34,35 @@ export const TextAlignBridge = new BridgeExtension<
   TextAlignEditorInstance,
   TextAlignMessage
 >({
-  tiptapExtension: TextAlign,
+  tiptapExtension: TextAlign.configure({
+    types: ['heading', 'paragraph'],
+  }),
 
   onBridgeMessage: (editor, message) => {
-    if (
-      ![
-        TextAlignEditorActionType.ToggleTextAlignLeft,
-        TextAlignEditorActionType.ToggleTextAlignRight,
-        TextAlignEditorActionType.ToggleTextAlignCenter,
-        TextAlignEditorActionType.ToggleTextAlignJustify,
-      ].includes(message.type as TextAlignEditorActionType)
-    ) {
+    if (message.type === TextAlignEditorActionType.SetTextAlign) {
+      editor
+        .chain()
+        .focus()
+        .setTextAlign(message.payload ?? '')
+        .run();
       return false;
     }
-    //'left', 'center', 'right', 'justify'
-    let align = 'justify';
-    message.type === TextAlignEditorActionType.ToggleTextAlignLeft &&
-      (align = 'left');
-    message.type === TextAlignEditorActionType.ToggleTextAlignRight &&
-      (align = 'right');
-    message.type === TextAlignEditorActionType.ToggleTextAlignCenter &&
-      (align = 'center');
-    message.type === TextAlignEditorActionType.ToggleTextAlignJustify &&
-      (align = 'justify');
-    editor.chain().focus().setTextAlign(align).run();
+    if (message.type === TextAlignEditorActionType.UnSetTextAlign) {
+      editor.chain().focus().unsetTextAlign().run();
+      return false;
+    }
     return false;
   },
   extendEditorInstance: (sendBridgeMessage) => {
     return {
-      toggleTextAlignLeft: () =>
+      setTextAlign: (payload) =>
         sendBridgeMessage({
-          type: TextAlignEditorActionType.ToggleTextAlignLeft,
+          type: TextAlignEditorActionType.SetTextAlign,
+          payload: payload,
         }),
-      toggleTextAlignRight: () =>
+      unSetTextAlign: () =>
         sendBridgeMessage({
-          type: TextAlignEditorActionType.ToggleTextAlignRight,
-        }),
-      toggleTextAlignCenter: () =>
-        sendBridgeMessage({
-          type: TextAlignEditorActionType.ToggleTextAlignCenter,
-        }),
-      toggleTextAlignJustify: () =>
-        sendBridgeMessage({
-          type: TextAlignEditorActionType.ToggleTextAlignJustify,
+          type: TextAlignEditorActionType.UnSetTextAlign,
         }),
     };
   },

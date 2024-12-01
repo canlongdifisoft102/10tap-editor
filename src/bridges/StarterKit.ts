@@ -42,5 +42,4 @@ export const TenTapStartKit = [
   DropCursorBridge,
   HardBreakBridge,
   TextAlignBridge,
-  TextAlignBridge,
 ];
