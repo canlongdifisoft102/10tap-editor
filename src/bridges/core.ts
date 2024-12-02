@@ -1,10 +1,10 @@
-import BridgeExtension from './base';
-import { asyncMessages } from '../RichText/AsyncMessages';
-import type { BridgeState, EditorTheme } from '../types';
-import { focusListener } from '../webEditorUtils/focusListener';
 import Document from '@tiptap/extension-document';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
+import { asyncMessages } from '../RichText/AsyncMessages';
+import type { BridgeState, EditorTheme } from '../types';
+import { focusListener } from '../webEditorUtils/focusListener';
+import BridgeExtension from './base';
 
 export type EditorContentType = 'html' | 'text' | 'json';
 
@@ -22,6 +22,11 @@ type CoreEditorInstance = {
   getJSON: () => Promise<object>;
   getText: () => Promise<string>;
   setContent: (content: string) => void;
+  insertContent: (content: string) => void;
+  insertContentAt: (
+    pos: number | { from: number; to: number },
+    content: string
+  ) => void;
   setSelection: (from: number, to: number) => void;
   updateScrollThresholdAndMargin: (offset: number) => void;
   focus: (pos: FocusArgs) => void;
@@ -46,6 +51,8 @@ export enum CoreEditorActionType {
   SendTextToNative = 'send-text-back',
   SendJSONToNative = 'send-json-back',
   SetContent = 'set-content',
+  InsertContent = 'insert-content',
+  InsertContentAt = 'insert-content-at',
   StateUpdate = 'stateUpdate',
   Focus = 'focus',
   Blur = 'blur',
@@ -106,6 +113,19 @@ export type CoreMessages =
       };
     }
   | {
+      type: CoreEditorActionType.InsertContent;
+      payload: {
+        content: string;
+      };
+    }
+  | {
+      type: CoreEditorActionType.InsertContentAt;
+      payload: {
+        pos: number | { from: number; to: number };
+        content: string;
+      };
+    }
+  | {
       type: CoreEditorActionType.StateUpdate;
       payload: BridgeState;
     }
@@ -156,6 +176,17 @@ export const CoreBridge = new BridgeExtension<
   onBridgeMessage: (editor, message, sendMessageBack) => {
     if (message.type === CoreEditorActionType.SetContent) {
       editor.commands.setContent(message.payload.content);
+      return true;
+    }
+    if (message.type === CoreEditorActionType.InsertContent) {
+      editor.commands.insertContent(message.payload.content);
+      return true;
+    }
+    if (message.type === CoreEditorActionType.InsertContentAt) {
+      editor.commands.insertContentAt(
+        message.payload.pos,
+        message.payload.content
+      );
       return true;
     }
     if (message.type === CoreEditorActionType.GetHTML) {
@@ -273,6 +304,26 @@ export const CoreBridge = new BridgeExtension<
         sendBridgeMessage({
           type: CoreEditorActionType.SetContent,
           payload: {
+            content,
+          },
+        });
+      },
+      insertContent: (content: string) => {
+        sendBridgeMessage({
+          type: CoreEditorActionType.InsertContent,
+          payload: {
+            content,
+          },
+        });
+      },
+      insertContentAt: (
+        pos: number | { from: number; to: number },
+        content: string
+      ) => {
+        sendBridgeMessage({
+          type: CoreEditorActionType.InsertContentAt,
+          payload: {
+            pos,
             content,
           },
         });
