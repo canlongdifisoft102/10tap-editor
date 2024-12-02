@@ -19,6 +19,7 @@ import { StrikeBridge } from './strike';
 import { TaskListBridge } from './tasklist';
 import { TextAlignBridge } from './textAlign';
 import { UnderlineBridge } from './underline';
+import { YoutubeBridge } from './youTube';
 
 export const TenTapStartKit = [
   BoldBridge,
@@ -42,4 +43,5 @@ export const TenTapStartKit = [
   DropCursorBridge,
   HardBreakBridge,
   TextAlignBridge,
+  YoutubeBridge,
 ];

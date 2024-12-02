@@ -21,6 +21,7 @@ export { StrikeBridge } from '../bridges/strike';
 export { TaskListBridge } from '../bridges/tasklist';
 export { TextAlignBridge } from '../bridges/textAlign';
 export { UnderlineBridge } from '../bridges/underline';
+export { YoutubeBridge } from '../bridges/youTube';
 export * from './useTenTap';
 
 // We are exposing tiptap view + state here to avoid this error https://github.com/ueberdosis/tiptap/issues/3869#issuecomment-2167931620
