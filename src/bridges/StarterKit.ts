@@ -6,6 +6,7 @@ import { CodeBridge } from './code';
 import { ColorBridge } from './color';
 import { CoreBridge } from './core';
 import { DropCursorBridge } from './dropcursor';
+import { HashTagBridge } from './hashtag';
 import { HeadingBridge } from './heading';
 import { HighlightBridge } from './highlight';
 import { HistoryBridge } from './history';
@@ -46,4 +47,5 @@ export const TenTapStartKit = [
   TextAlignBridge,
   YoutubeBridge,
   MentionBridge,
+  HashTagBridge,
 ];
