@@ -32,6 +32,7 @@ export const HashTagBridge = new BridgeExtension<
   HashTagEditorInstance,
   HashTagMessage
 >({
+  forceName: 'hashtag',
   tiptapExtension: Mention.configure({
     deleteTriggerWithBackspace: true,
     suggestion: {

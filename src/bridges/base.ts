@@ -1,7 +1,7 @@
 import { Editor, type AnyExtension } from '@tiptap/core';
-import type { EditorBridge, BridgeState } from '../types';
-import type WebView from 'react-native-webview';
 import type { RefObject } from 'react';
+import type WebView from 'react-native-webview';
+import type { BridgeState, EditorBridge } from '../types';
 
 interface BridgeExtension<T = any, E = any, M = any> {
   name: string;
@@ -54,7 +54,7 @@ class BridgeExtension<T = any, E = any, M = any> {
     } else {
       this.name = Array.isArray(tiptapExtension)
         ? tiptapExtension.map((e) => e.name).join('+')
-        : tiptapExtension.name;
+        : forceName || tiptapExtension.name;
     }
 
     this.tiptapExtension = tiptapExtension;

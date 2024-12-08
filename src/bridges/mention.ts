@@ -29,6 +29,7 @@ export const MentionBridge = new BridgeExtension<
   MentionEditorInstance,
   MentionMessage
 >({
+  forceName: 'mention',
   tiptapExtension: Mention.configure({
     suggestion: {
       char: '@',
