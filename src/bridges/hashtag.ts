@@ -43,30 +43,21 @@ export const HashTagBridge = new BridgeExtension<
       return [
         'a',
         {
-          'class': 'mention',
-          'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
+          'class': 'hashtag',
+          'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.value}`,
           'target': '_blank',
           'data-index': '0',
           'data-denotation-char': '#',
           'data-id': node.attrs?.id,
-          'data-label': node.attrs?.label,
-          'data-value': node.attrs?.label,
-          'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
-          'data-type': 'hashtag',
+          'data-value': node.attrs?.value,
+          'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.value}`,
         },
         [
           'span',
           {
-            'contenteditable': 'false',
-            'data-index': '0',
-            'data-denotation-char': '#',
-            'data-id': node.attrs?.id,
-            'data-label': node.attrs?.label,
-            'data-value': node.attrs?.label,
-            'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
-            'data-type': 'hashtag',
+            contenteditable: 'false',
           },
-          `#${node.attrs.label}`,
+          `#${node.attrs.value}`,
         ],
       ];
     },
@@ -87,7 +78,7 @@ export const HashTagBridge = new BridgeExtension<
           {
             type: 'hashtag',
             attrs: {
-              label: message.payload.label,
+              value: message.payload.label,
               id: message.payload.id,
             },
           },

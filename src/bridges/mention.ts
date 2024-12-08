@@ -1,4 +1,4 @@
-import Mention, { MentionPluginKey } from '@tiptap/extension-mention';
+import { Mention, MentionPluginKey } from './customNode/mention';
 
 import BridgeExtension from './base';
 
@@ -46,24 +46,15 @@ export const MentionBridge = new BridgeExtension<
           'data-index': '0',
           'data-denotation-char': '@',
           'data-id': node.attrs?.id,
-          'data-label': node.attrs?.label,
-          'data-value': node.attrs?.label,
+          'data-value': node.attrs?.value,
           'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
-          'data-type': 'mention',
         },
         [
           'span',
           {
-            'contenteditable': 'false',
-            'data-index': '0',
-            'data-denotation-char': '@',
-            'data-id': node.attrs?.id,
-            'data-label': node.attrs?.label,
-            'data-value': node.attrs?.label,
-            'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
-            'data-type': 'mention',
+            contenteditable: 'false',
           },
-          `@${node.attrs.label}`,
+          `@${node.attrs.value}`,
         ],
       ];
     },
@@ -84,7 +75,7 @@ export const MentionBridge = new BridgeExtension<
           {
             type: 'mention',
             attrs: {
-              label: message.payload.label,
+              value: message.payload.label,
               id: message.payload.id,
             },
           },

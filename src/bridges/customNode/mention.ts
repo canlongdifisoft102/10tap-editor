@@ -4,61 +4,61 @@ import { PluginKey } from '@tiptap/pm/state';
 import Suggestion, { type SuggestionOptions } from '@tiptap/suggestion';
 
 // See `addAttributes` below
-export interface HashTagNodeAttrs {
+export interface MentionNodeAttrs {
   /**
-   * The identifier for the selected item that was hashtaged, stored as a `data-id`
+   * The identifier for the selected item that was mentioned, stored as a `data-id`
    * attribute.
    */
   id: string | null;
   /**
-   * The label to be rendered by the editor as the displayed text for this hashtaged
+   * The label to be rendered by the editor as the displayed text for this mentioned
    * item, if provided. Stored as a `data-label` attribute. See `renderLabel`.
    */
   value?: string | null;
 }
 
-export type HashTagOptions<
+export type MentionOptions<
   SuggestionItem = any,
-  Attrs extends Record<string, any> = HashTagNodeAttrs
+  Attrs extends Record<string, any> = MentionNodeAttrs
 > = {
   /**
-   * The HTML attributes for a hashtag node.
+   * The HTML attributes for a mention node.
    * @default {}
    * @example { class: 'foo' }
    */
   HTMLAttributes: Record<string, any>;
 
   /**
-   * A function to render the label of a hashtag.
+   * A function to render the label of a mention.
    * @deprecated use renderText and renderHTML instead
    * @param props The render props
    * @returns The label
-   * @example ({ options, node }) => `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`
+   * @example ({ options, node }) => `${options.suggestion.char}${node.attrs.label ?? node.attrs.id}`
    */
   renderLabel?: (props: {
-    options: HashTagOptions<SuggestionItem, Attrs>;
+    options: MentionOptions<SuggestionItem, Attrs>;
     node: ProseMirrorNode;
   }) => string;
 
   /**
-   * A function to render the text of a hashtag.
+   * A function to render the text of a mention.
    * @param props The render props
    * @returns The text
-   * @example ({ options, node }) => `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`
+   * @example ({ options, node }) => `${options.suggestion.char}${node.attrs.label ?? node.attrs.id}`
    */
   renderText: (props: {
-    options: HashTagOptions<SuggestionItem, Attrs>;
+    options: MentionOptions<SuggestionItem, Attrs>;
     node: ProseMirrorNode;
   }) => string;
 
   /**
-   * A function to render the HTML of a hashtag.
+   * A function to render the HTML of a mention.
    * @param props The render props
    * @returns The HTML as a ProseMirror DOM Output Spec
-   * @example ({ options, node }) => ['span', { 'data-type': 'hashtag' }, `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`]
+   * @example ({ options, node }) => ['span', { 'data-type': 'mention' }, `${options.suggestion.char}${node.attrs.label ?? node.attrs.id}`]
    */
   renderHTML: (props: {
-    options: HashTagOptions<SuggestionItem, Attrs>;
+    options: MentionOptions<SuggestionItem, Attrs>;
     node: ProseMirrorNode;
   }) => DOMOutputSpec;
 
@@ -71,21 +71,25 @@ export type HashTagOptions<
   /**
    * The suggestion options.
    * @default {}
-   * @example { char: '@', pluginKey: HashTagPluginKey, command: ({ editor, range, props }) => { ... } }
+   * @example { char: '@', pluginKey: MentionPluginKey, command: ({ editor, range, props }) => { ... } }
    */
   suggestion: Omit<SuggestionOptions<SuggestionItem, Attrs>, 'editor'>;
 };
 
 /**
- * The plugin key for the hashtag plugin.
- * @default 'hashtag'
+ * The plugin key for the mention plugin.
+ * @default 'mention'
  */
-export const HashTagPluginKey = new PluginKey('hashtag');
+export const MentionPluginKey = new PluginKey('mention');
 
-export const HashTag = Node.create<HashTagOptions>({
-  name: 'hashtag',
+/**
+ * This extension allows you to insert mentions into the editor.
+ * @see https://www.tiptap.dev/api/extensions/mention
+ */
+export const Mention = Node.create<MentionOptions>({
+  name: 'mention',
 
-  priority: 102,
+  priority: 101,
 
   addOptions() {
     return {
@@ -102,8 +106,8 @@ export const HashTag = Node.create<HashTagOptions>({
         ];
       },
       suggestion: {
-        char: '#',
-        pluginKey: HashTagPluginKey,
+        char: '@',
+        pluginKey: MentionPluginKey,
         command: ({ editor, range, props }) => {
           // increase range.to by one when the next node is of type "text"
           // and starts with a space character
@@ -139,7 +143,6 @@ export const HashTag = Node.create<HashTagOptions>({
           const type = state.schema.nodes[this.name];
           if (type) {
             const allow = !!$from.parent.type.contentMatch.matchType(type);
-
             return allow;
           }
           return false;
@@ -243,7 +246,7 @@ export const HashTag = Node.create<HashTagOptions>({
     return {
       Backspace: () =>
         this.editor.commands.command(({ tr, state }) => {
-          let isHashTag = false;
+          let isMention = false;
           const { selection } = state;
           const { empty, anchor } = selection;
 
@@ -253,7 +256,7 @@ export const HashTag = Node.create<HashTagOptions>({
           // @ts-ignore
           state.doc.nodesBetween(anchor - 1, anchor, (node, pos) => {
             if (node.type.name === this.name) {
-              isHashTag = true;
+              isMention = true;
               tr.insertText(
                 this.options.deleteTriggerWithBackspace
                   ? ''
@@ -265,7 +268,7 @@ export const HashTag = Node.create<HashTagOptions>({
             }
           });
 
-          return isHashTag;
+          return isMention;
         }),
     };
   },
