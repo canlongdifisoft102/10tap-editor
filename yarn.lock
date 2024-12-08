@@ -1904,6 +1904,7 @@ __metadata:
     "@tiptap/extension-italic": ^2.2.1
     "@tiptap/extension-link": ^2.1.16
     "@tiptap/extension-list-item": ^2.2.1
+    "@tiptap/extension-mention": ^2.10.3
     "@tiptap/extension-ordered-list": ^2.2.1
     "@tiptap/extension-placeholder": ^2.2.1
     "@tiptap/extension-strike": ^2.2.1
@@ -1916,6 +1917,7 @@ __metadata:
     "@tiptap/pm": ^2.1.16
     "@tiptap/react": ^2.1.16
     "@tiptap/starter-kit": ^2.1.16
+    "@tiptap/suggestion": ^2.10.3
     "@types/jest": ^28.1.2
     "@types/lodash": ^4.14.202
     "@types/react": ~17.0.21
@@ -5065,6 +5067,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-mention@npm:^2.10.3":
+  version: 2.10.3
+  resolution: "@tiptap/extension-mention@npm:2.10.3"
+  peerDependencies:
+    "@tiptap/core": ^2.7.0
+    "@tiptap/pm": ^2.7.0
+    "@tiptap/suggestion": ^2.7.0
+  checksum: 246b6724d11ad68f893de0ebe79846bd68534c37fe816c47139b77420a1dfde2b0f3f56a5d9c3d9f7f556f8efcd8c0a755338e6e6470490aabbea663777ddf21
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-ordered-list@npm:^2.1.16":
   version: 2.1.16
   resolution: "@tiptap/extension-ordered-list@npm:2.1.16"
@@ -5249,6 +5262,16 @@ __metadata:
     "@tiptap/extension-strike": ^2.1.16
     "@tiptap/extension-text": ^2.1.16
   checksum: 9b12d4c693b3c6ff1c02a96730650ee5ef472584b830164e279871054ad92b2ad76b3e355c12b0b12263406280a168e0468e01debbcdf53a252397c8e7e0f99f
+  languageName: node
+  linkType: hard
+
+"@tiptap/suggestion@npm:^2.10.3":
+  version: 2.10.3
+  resolution: "@tiptap/suggestion@npm:2.10.3"
+  peerDependencies:
+    "@tiptap/core": ^2.7.0
+    "@tiptap/pm": ^2.7.0
+  checksum: 5d463131e4b64d1126f5d63ca5155b2d8cfb47277f7192fd542d94653f87a886ca7c8af2d85f82ea9dc61b777fcd7026545a8049bdfc88668dec1091462d2ef1
   languageName: node
   linkType: hard
 

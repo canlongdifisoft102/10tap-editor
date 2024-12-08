@@ -13,6 +13,7 @@ import { ImageBridge } from './image';
 import { ItalicBridge } from './italic';
 import { LinkBridge } from './link';
 import { ListItemBridge } from './listItem';
+import { MentionBridge } from './mention';
 import { OrderedListBridge } from './orderedList';
 import { PlaceholderBridge } from './placeholder';
 import { StrikeBridge } from './strike';
@@ -44,4 +45,5 @@ export const TenTapStartKit = [
   HardBreakBridge,
   TextAlignBridge,
   YoutubeBridge,
+  MentionBridge,
 ];

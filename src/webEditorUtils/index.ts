@@ -14,6 +14,7 @@ export { ImageBridge } from '../bridges/image';
 export { ItalicBridge } from '../bridges/italic';
 export { LinkBridge } from '../bridges/link';
 export { ListItemBridge } from '../bridges/listItem';
+export { MentionBridge } from '../bridges/mention';
 export { OrderedListBridge } from '../bridges/orderedList';
 export { PlaceholderBridge } from '../bridges/placeholder';
 export { TenTapStartKit } from '../bridges/StarterKit';

@@ -1,6 +1,6 @@
 {
   "name": "@canlongdifisoft102/tentap-editor",
-  "version": "0.5.28",
+  "version": "0.5.29",
   "description": "React Native Rich Text Editor",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -218,6 +218,7 @@
     "@tiptap/extension-italic": "^2.2.1",
     "@tiptap/extension-link": "^2.1.16",
     "@tiptap/extension-list-item": "^2.2.1",
+    "@tiptap/extension-mention": "^2.10.3",
     "@tiptap/extension-ordered-list": "^2.2.1",
     "@tiptap/extension-placeholder": "^2.2.1",
     "@tiptap/extension-strike": "^2.2.1",
@@ -230,6 +231,7 @@
     "@tiptap/pm": "^2.1.16",
     "@tiptap/react": "^2.1.16",
     "@tiptap/starter-kit": "^2.1.16",
+    "@tiptap/suggestion": "^2.10.3",
     "lodash": "^4.17.21",
     "react-dom": "^18.2.0"
   }
