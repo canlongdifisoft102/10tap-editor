@@ -4,7 +4,7 @@ import { PluginKey } from '@tiptap/pm/state';
 import BridgeExtension from './base';
 
 type HashTagEditorState = {
-  query?: string | null;
+  queryHashTag?: string | null;
 };
 
 type HashTagEditorInstance = {
@@ -43,13 +43,13 @@ export const HashTagBridge = new BridgeExtension<
         'a',
         {
           'class': 'HashTag',
-          'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+          'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
           'target': '_blank',
           'data-index': '0',
           'data-denotation-char': '@',
           'data-id': node.attrs?.id,
           'data-value': node.attrs?.label,
-          'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+          'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
         },
         [
           'span',
@@ -104,7 +104,7 @@ export const HashTagBridge = new BridgeExtension<
   },
   extendEditorState: (editor) => {
     return {
-      query: HashTagPluginKey.getState(editor.state)?.query,
+      queryHashTag: HashTagPluginKey.getState(editor.state)?.query,
     };
   },
 });

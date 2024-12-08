@@ -3,7 +3,7 @@ import Mention, { MentionPluginKey } from '@tiptap/extension-mention';
 import BridgeExtension from './base';
 
 type MentionEditorState = {
-  query?: string | null;
+  queryMention?: string | null;
 };
 
 type MentionEditorInstance = {
@@ -30,6 +30,10 @@ export const MentionBridge = new BridgeExtension<
   MentionMessage
 >({
   tiptapExtension: Mention.configure({
+    suggestion: {
+      char: '@',
+      pluginKey: MentionPluginKey,
+    },
     deleteTriggerWithBackspace: true,
     renderHTML({ options, node }) {
       return [
@@ -97,7 +101,7 @@ export const MentionBridge = new BridgeExtension<
   },
   extendEditorState: (editor) => {
     return {
-      query: MentionPluginKey.getState(editor.state)?.query,
+      queryMention: MentionPluginKey.getState(editor.state)?.query,
     };
   },
 });
