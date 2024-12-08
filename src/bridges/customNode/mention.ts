@@ -88,65 +88,45 @@ export const MentionPluginKey = new PluginKey('mention');
  */
 export const Mention = Node.create<MentionOptions>({
   name: 'mention',
-
   priority: 101,
-
   addOptions() {
     return {
       HTMLAttributes: {},
       renderText({ options, node }) {
         return `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`;
       },
-      deleteTriggerWithBackspace: false,
+      deleteTriggerWithBackspace: true,
       renderHTML({ options, node }) {
+        const mergedAttributes = mergeAttributes(
+          {
+            'class': 'mention',
+            'data-denotation-char': '@',
+            'data-index': 0,
+            'target': '_blank',
+          },
+          options.HTMLAttributes,
+          {
+            'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+            'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+            'data-id': node.attrs.id,
+            'data-value': node.attrs.value,
+          }
+        );
         return [
-          'span',
-          mergeAttributes(this.HTMLAttributes, options.HTMLAttributes),
-          `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`,
+          'a',
+          mergedAttributes,
+          [
+            'span',
+            {
+              contenteditable: 'false',
+            },
+            `@${node.attrs.value}`,
+          ],
         ];
       },
       suggestion: {
         char: '@',
         pluginKey: MentionPluginKey,
-        command: ({ editor, range, props }) => {
-          // increase range.to by one when the next node is of type "text"
-          // and starts with a space character
-          const nodeAfter = editor.view.state.selection.$to.nodeAfter;
-          const overrideSpace = nodeAfter?.text?.startsWith(' ');
-
-          if (overrideSpace) {
-            range.to += 1;
-          }
-
-          editor
-            .chain()
-            .focus()
-            .insertContentAt(range, [
-              {
-                type: this.name,
-                attrs: props,
-              },
-              {
-                type: 'text',
-                text: ' ',
-              },
-            ])
-            .run();
-
-          // get reference to `window` object from editor element, to support cross-frame JS usage
-          editor.view.dom.ownerDocument.defaultView
-            ?.getSelection()
-            ?.collapseToEnd();
-        },
-        allow: ({ state, range }) => {
-          const $from = state.doc.resolve(range.from);
-          const type = state.schema.nodes[this.name];
-          if (type) {
-            const allow = !!$from.parent.type.contentMatch.matchType(type);
-            return allow;
-          }
-          return false;
-        },
       },
     };
   },
@@ -194,36 +174,46 @@ export const Mention = Node.create<MentionOptions>({
   parseHTML() {
     return [
       {
-        tag: `a[class="${this.name}"]`,
+        tag: 'a[data-denotation-char="@"]',
+        getAttrs: (element) => {
+          if (typeof element === 'string') {
+            return {
+              id: 'element',
+              value: 'element',
+            };
+          }
+          return {
+            id: element.getAttribute('data-id'),
+            value: element.getAttribute('data-value'),
+          };
+        },
+        preserveWhitespace: 'full',
       },
     ];
   },
 
-  renderHTML({ node, HTMLAttributes }) {
-    const mergedOptions = { ...this.options };
-
-    mergedOptions.HTMLAttributes = mergeAttributes(
-      { class: this.name },
+  renderHTML({ node }) {
+    const mergedAttributes = mergeAttributes(
+      {
+        'class': 'mention',
+        'data-denotation-char': '@',
+        'data-index': 0,
+        'target': '_blank',
+      },
       this.options.HTMLAttributes,
-      HTMLAttributes
+      {
+        'data-id': node.attrs.id,
+        'data-value': node.attrs.value,
+        'href': `${this.options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+        'data-href': `${this.options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+        'data-index': '0',
+      }
     );
-    const html = this.options.renderHTML({
-      options: mergedOptions,
-      node,
-    });
-
-    if (typeof html === 'string') {
-      return [
-        'a',
-        mergeAttributes(
-          { class: this.name },
-          this.options.HTMLAttributes,
-          HTMLAttributes
-        ),
-        html,
-      ];
-    }
-    return html;
+    return [
+      'a',
+      mergedAttributes,
+      ['span', { contenteditable: 'false' }, `@${node.attrs.value}`],
+    ];
   },
 
   renderText({ node }) {

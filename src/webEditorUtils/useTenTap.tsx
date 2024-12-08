@@ -1,12 +1,12 @@
+import { Editor } from '@tiptap/core';
+import { useEditor } from '@tiptap/react';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo } from 'react';
-import { useEditor } from '@tiptap/react';
-import { Editor } from '@tiptap/core';
-import { type EditorMessage, EditorMessageType } from '../types/Messaging';
-import { type BridgeState } from '../types/EditorBridge';
 import type BridgeExtension from '../bridges/base';
 import { CoreEditorActionType } from '../bridges/core';
 import { blueBackgroundPlugin } from '../bridges/HighlightSelection';
+import { type BridgeState } from '../types/EditorBridge';
+import { type EditorMessage, EditorMessageType } from '../types/Messaging';
 import { contentHeightListener } from './contentHeight';
 declare global {
   interface Window {
@@ -98,6 +98,9 @@ export const useTenTap = (options?: useTenTapArgs) => {
     onTransaction: (onUpdate) => sendStateUpdate(onUpdate.editor),
     editable: window.editable,
     ...tiptapOptionsWithExtensions,
+    parseOptions: {
+      preserveWhitespace: 'full',
+    },
   });
 
   useEffect(() => {

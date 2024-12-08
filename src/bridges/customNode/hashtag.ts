@@ -95,10 +95,25 @@ export const HashTag = Node.create<HashTagOptions>({
       },
       deleteTriggerWithBackspace: false,
       renderHTML({ options, node }) {
+        const mergedAttributes = mergeAttributes(
+          {
+            'class': 'mention',
+            'data-denotation-char': '#',
+            'data-index': 0,
+            'target': '_blank',
+          },
+          options.HTMLAttributes,
+          {
+            'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+            'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+            'data-id': node.attrs.id,
+            'data-value': node.attrs.value,
+          }
+        );
         return [
-          'span',
-          mergeAttributes(this.HTMLAttributes, options.HTMLAttributes),
-          `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`,
+          'a',
+          mergedAttributes,
+          ['span', { contenteditable: 'false' }, `#${node.attrs.value}`],
         ];
       },
       suggestion: {
@@ -191,36 +206,45 @@ export const HashTag = Node.create<HashTagOptions>({
   parseHTML() {
     return [
       {
-        tag: `a[class="${this.name}"]`,
+        tag: 'a[data-denotation-char="#"]',
+        getAttrs: (element) => {
+          if (typeof element === 'string') {
+            return {
+              id: 'element',
+              value: 'element',
+            };
+          }
+          return {
+            id: element.getAttribute('data-id'),
+            value: element.getAttribute('data-value'),
+          };
+        },
+        preserveWhitespace: 'full',
       },
     ];
   },
 
-  renderHTML({ node, HTMLAttributes }) {
-    const mergedOptions = { ...this.options };
-
-    mergedOptions.HTMLAttributes = mergeAttributes(
-      { class: this.name },
+  renderHTML({ node }) {
+    const mergedAttributes = mergeAttributes(
+      {
+        'class': 'mention',
+        'data-denotation-char': '#',
+        'data-index': 0,
+        'target': '_blank',
+      },
       this.options.HTMLAttributes,
-      HTMLAttributes
+      {
+        'href': `${this.options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+        'data-href': `${this.options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+        'data-id': node.attrs.id,
+        'data-value': node.attrs.value,
+      }
     );
-    const html = this.options.renderHTML({
-      options: mergedOptions,
-      node,
-    });
-
-    if (typeof html === 'string') {
-      return [
-        'a',
-        mergeAttributes(
-          { class: this.name },
-          this.options.HTMLAttributes,
-          HTMLAttributes
-        ),
-        html,
-      ];
-    }
-    return html;
+    return [
+      'a',
+      mergedAttributes,
+      ['span', { contenteditable: 'false' }, `#${node.attrs.value}`],
+    ];
   },
 
   renderText({ node }) {
