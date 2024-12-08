@@ -43,7 +43,7 @@ export const HashTagBridge = new BridgeExtension<
       return [
         'a',
         {
-          'class': 'HashTag',
+          'class': 'mention',
           'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
           'target': '_blank',
           'data-index': '0',
