@@ -51,6 +51,7 @@ export const HashTagBridge = new BridgeExtension<
           'data-id': node.attrs?.id,
           'data-value': node.attrs?.label,
           'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
+          'data-type': 'hashtag',
         },
         [
           'span',

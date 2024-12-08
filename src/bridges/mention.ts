@@ -48,6 +48,7 @@ export const MentionBridge = new BridgeExtension<
           'data-id': node.attrs?.id,
           'data-value': node.attrs?.label,
           'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
+          'data-type': 'mention',
         },
         [
           'span',
