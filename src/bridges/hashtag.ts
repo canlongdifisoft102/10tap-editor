@@ -47,7 +47,7 @@ export const HashTagBridge = new BridgeExtension<
           'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
           'target': '_blank',
           'data-index': '0',
-          'data-denotation-char': '@',
+          'data-denotation-char': '#',
           'data-id': node.attrs?.id,
           'data-value': node.attrs?.label,
           'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
@@ -56,7 +56,13 @@ export const HashTagBridge = new BridgeExtension<
         [
           'span',
           {
-            contenteditable: 'false',
+            'contenteditable': 'false',
+            'data-index': '0',
+            'data-denotation-char': '#',
+            'data-id': node.attrs?.id,
+            'data-value': node.attrs?.label,
+            'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.label}`,
+            'data-type': 'hashtag',
           },
           `#${node.attrs.label}`,
         ],
