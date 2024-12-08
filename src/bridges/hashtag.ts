@@ -1,4 +1,4 @@
-import Mention from '@tiptap/extension-mention';
+import { HashTag } from './customNode/hashtag';
 
 import { PluginKey } from '@tiptap/pm/state';
 import BridgeExtension from './base';
@@ -33,7 +33,7 @@ export const HashTagBridge = new BridgeExtension<
   HashTagMessage
 >({
   forceName: 'hashtag',
-  tiptapExtension: Mention.configure({
+  tiptapExtension: HashTag.configure({
     deleteTriggerWithBackspace: true,
     suggestion: {
       char: '#',
@@ -76,7 +76,7 @@ export const HashTagBridge = new BridgeExtension<
         .focus()
         .insertContentAt(range, [
           {
-            type: 'mention',
+            type: 'hashtag',
             attrs: {
               label: message.payload.label,
               id: message.payload.id,

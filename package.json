@@ -1,6 +1,6 @@
 {
   "name": "@canlongdifisoft102/tentap-editor",
-  "version": "0.5.32",
+  "version": "0.5.33",
   "description": "React Native Rich Text Editor",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -50,7 +50,8 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it"
+    "release": "release-it",
+    "build-all": "yarn editor:build && yarn editor:build-web-utils"
   },
   "keywords": [
     "rich text",
