@@ -30,13 +30,7 @@ export const YoutubeBridge = new BridgeExtension<
   tiptapExtension: Youtube,
   onBridgeMessage: (editor, message) => {
     if (message.type === YoutubeEditorActionType.InsertYouTube) {
-      editor
-        .chain()
-        .focus()
-        .setYoutubeVideo(message.payload)
-        .setHardBreak()
-        .setTextSelection(editor.state.selection.to + 1)
-        .run();
+      editor.chain().focus().setYoutubeVideo(message.payload).run();
       return false;
     }
 
