@@ -1,6 +1,6 @@
 {
   "name": "@canlongdifisoft102/tentap-editor",
-  "version": "0.5.49",
+  "version": "0.5.50",
   "description": "React Native Rich Text Editor",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

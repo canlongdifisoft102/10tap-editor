@@ -95,7 +95,7 @@ export const Mention = Node.create<MentionOptions>({
       renderText({ options, node }) {
         return `${options.suggestion.char}${node.attrs.value ?? node.attrs.id}`;
       },
-      deleteTriggerWithBackspace: true,
+      deleteTriggerWithBackspace: false,
       renderHTML({ options, node }) {
         const mergedAttributes = mergeAttributes(
           {

@@ -30,35 +30,7 @@ export const MentionBridge = new BridgeExtension<
   MentionMessage
 >({
   forceName: 'mention',
-  tiptapExtension: Mention.configure({
-    suggestion: {
-      char: '@',
-      pluginKey: MentionPluginKey,
-    },
-    deleteTriggerWithBackspace: true,
-    renderHTML({ options, node }) {
-      return [
-        'a',
-        {
-          'class': 'mention',
-          'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
-          'target': '_blank',
-          'data-index': '0',
-          'data-denotation-char': '@',
-          'data-id': node.attrs?.id,
-          'data-value': node.attrs?.value,
-          'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
-        },
-        [
-          'span',
-          {
-            contenteditable: 'false',
-          },
-          `@${node.attrs.value}`,
-        ],
-      ];
-    },
-  }),
+  tiptapExtension: Mention,
   onBridgeMessage: (editor, message) => {
     if (message.type === MentionEditorActionType.InsertMention) {
       const state = MentionPluginKey.getState(editor.state);

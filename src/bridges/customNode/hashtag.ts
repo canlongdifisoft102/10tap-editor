@@ -119,46 +119,6 @@ export const HashTag = Node.create<HashTagOptions>({
       suggestion: {
         char: '#',
         pluginKey: HashTagPluginKey,
-        command: ({ editor, range, props }) => {
-          // increase range.to by one when the next node is of type "text"
-          // and starts with a space character
-          const nodeAfter = editor.view.state.selection.$to.nodeAfter;
-          const overrideSpace = nodeAfter?.text?.startsWith(' ');
-
-          if (overrideSpace) {
-            range.to += 1;
-          }
-
-          editor
-            .chain()
-            .focus()
-            .insertContentAt(range, [
-              {
-                type: this.name,
-                attrs: props,
-              },
-              {
-                type: 'text',
-                text: ' ',
-              },
-            ])
-            .run();
-
-          // get reference to `window` object from editor element, to support cross-frame JS usage
-          editor.view.dom.ownerDocument.defaultView
-            ?.getSelection()
-            ?.collapseToEnd();
-        },
-        allow: ({ state, range }) => {
-          const $from = state.doc.resolve(range.from);
-          const type = state.schema.nodes[this.name];
-          if (type) {
-            const allow = !!$from.parent.type.contentMatch.matchType(type);
-
-            return allow;
-          }
-          return false;
-        },
       },
     };
   },

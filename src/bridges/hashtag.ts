@@ -1,6 +1,5 @@
-import { HashTag } from './customNode/hashtag';
+import { HashTag, HashTagPluginKey } from './customNode/hashtag';
 
-import { PluginKey } from '@tiptap/pm/state';
 import BridgeExtension from './base';
 
 type HashTagEditorState = {
@@ -20,8 +19,6 @@ export enum HashTagEditorActionType {
   InsertHashTag = 'insert-HashTag',
 }
 
-export const HashTagPluginKey = new PluginKey('hashtag');
-
 type HashTagMessage = {
   type: HashTagEditorActionType.InsertHashTag;
   payload: { id: string; label: string };
@@ -33,35 +30,7 @@ export const HashTagBridge = new BridgeExtension<
   HashTagMessage
 >({
   forceName: 'hashtag',
-  tiptapExtension: HashTag.configure({
-    deleteTriggerWithBackspace: true,
-    suggestion: {
-      char: '#',
-      pluginKey: HashTagPluginKey,
-    },
-    renderHTML({ options, node }) {
-      return [
-        'a',
-        {
-          'class': 'mention',
-          'href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
-          'target': '_blank',
-          'data-index': '0',
-          'data-denotation-char': '#',
-          'data-id': node.attrs?.id,
-          'data-value': node.attrs?.value,
-          'data-href': `${options.HTMLAttributes?.baseUrl}${node.attrs?.id}`,
-        },
-        [
-          'span',
-          {
-            contenteditable: 'false',
-          },
-          `#${node.attrs.value}`,
-        ],
-      ];
-    },
-  }),
+  tiptapExtension: HashTag,
   onBridgeMessage: (editor, message) => {
     if (message.type === HashTagEditorActionType.InsertHashTag) {
       const state = HashTagPluginKey.getState(editor.state);
