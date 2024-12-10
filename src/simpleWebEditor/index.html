@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <title>RichTextEditor</title>
   </head>
   <style>
@@ -34,6 +37,13 @@
     }
     .highlight-background {
       background-color: #e6e6ff;
+    }
+    img {
+      max-width: 50vw !important;
+      max-height: 500px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
     }
   </style>
   <body>
